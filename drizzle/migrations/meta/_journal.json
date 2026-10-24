@@ -8,6 +8,13 @@
       "when": 1792840547671,
       "tag": "0000_hivenet_enquiries_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792840642711,
+      "tag": "0001_create_enquiry_function",
+      "breakpoints": true
     }
   ]
 }

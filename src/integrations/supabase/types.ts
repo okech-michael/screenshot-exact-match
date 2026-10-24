@@ -141,6 +141,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_enquiry: {
+        Args: {
+          p_category: string
+          p_county: string
+          p_description: string
+          p_details: Json
+          p_email: string
+          p_estate: string
+          p_full_name: string
+          p_phone: string
+          p_preferred_contact: string
+          p_preferred_time: string
+          p_property_type: string
+          p_source: string
+          p_town: string
+        }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
