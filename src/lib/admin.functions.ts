@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 /*
  * Internal staff functions for the HiveNet enquiry dashboard.
@@ -7,21 +8,17 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
  * RLS policies back these checks up at the database level.
  */
 
-async function requireAdmin(context: { supabase: unknown; userId: string }) {
-  const { supabase, userId } = context as {
-    supabase: {
-      rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown }>;
-    };
-    userId: string;
-  };
-  const { data: isAdmin } = await supabase.rpc("has_role", {
-    _user_id: userId,
+type AdminContext = { supabase: SupabaseClient; userId: string };
+
+async function requireAdmin(context: AdminContext): Promise<AdminContext> {
+  const { data: isAdmin } = await context.supabase.rpc("has_role", {
+    _user_id: context.userId,
     _role: "admin",
   });
   if (!isAdmin) {
     throw new Response("Forbidden", { status: 403 });
   }
-  return { supabase, userId };
+  return context;
 }
 
 export type EnquiryRow = {
@@ -65,8 +62,8 @@ export const listEnquiries = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: EnquiryFilters) => input ?? {})
   .handler(async ({ data, context }) => {
-    await requireAdmin(context);
-    let query = context.supabase
+    const { supabase } = await requireAdmin(context);
+    let query = supabase
       .from("enquiries")
       .select("*")
       .order("created_at", { ascending: false })
@@ -87,17 +84,17 @@ export const listEnquiries = createServerFn({ method: "POST" })
 
     const { data: rows, error } = await query;
     if (error) throw new Error(error.message);
-    return rows as EnquiryRow[];
+    return (rows ?? []) as EnquiryRow[];
   });
 
 export const getEnquiry = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: { id: string }) => input)
   .handler(async ({ data, context }) => {
-    await requireAdmin(context);
+    const { supabase } = await requireAdmin(context);
     const [enquiryResult, notesResult] = await Promise.all([
-      context.supabase.from("enquiries").select("*").eq("id", data.id).maybeSingle(),
-      context.supabase
+      supabase.from("enquiries").select("*").eq("id", data.id).maybeSingle(),
+      supabase
         .from("enquiry_notes")
         .select("*")
         .eq("enquiry_id", data.id)
@@ -115,8 +112,8 @@ export const updateEnquiryStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: { id: string; status: string }) => input)
   .handler(async ({ data, context }) => {
-    await requireAdmin(context);
-    const { error } = await context.supabase
+    const { supabase } = await requireAdmin(context);
+    const { error } = await supabase
       .from("enquiries")
       .update({ status: data.status })
       .eq("id", data.id);
@@ -134,11 +131,11 @@ export const updateEnquiryDetails = createServerFn({ method: "POST" })
     }) => input
   )
   .handler(async ({ data, context }) => {
-    await requireAdmin(context);
-    const patch: Record<string, unknown> = {};
-    if (data.assignedTo !== undefined) patch.assigned_to = data.assignedTo || null;
-    if (data.followUpDate !== undefined) patch.follow_up_date = data.followUpDate || null;
-    const { error } = await context.supabase
+    const { supabase } = await requireAdmin(context);
+    const patch: { assigned_to?: string | null; follow_up_date?: string | null } = {};
+    if (data.assignedTo !== undefined) patch["assigned_to"] = data.assignedTo || null;
+    if (data.followUpDate !== undefined) patch["follow_up_date"] = data.followUpDate || null;
+    const { error } = await supabase
       .from("enquiries")
       .update(patch)
       .eq("id", data.id);
@@ -173,8 +170,8 @@ export type AdminStats = {
 export const getAdminStats = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    await requireAdmin(context);
-    const { data: rows, error } = await context.supabase
+    const { supabase } = await requireAdmin(context);
+    const { data: rows, error } = await supabase
       .from("enquiries")
       .select("status, category, created_at")
       .order("created_at", { ascending: false })
