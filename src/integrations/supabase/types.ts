@@ -14,16 +14,159 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      enquiries: {
+        Row: {
+          assigned_to: string | null
+          category: Database["public"]["Enums"]["enquiry_category"]
+          county: string | null
+          created_at: string
+          description: string | null
+          details: Json
+          email: string | null
+          estate: string | null
+          follow_up_date: string | null
+          full_name: string
+          id: string
+          phone: string
+          preferred_contact: string
+          preferred_time: string | null
+          property_type: string | null
+          reference: string
+          source: string
+          status: Database["public"]["Enums"]["enquiry_status"]
+          town: string | null
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          category: Database["public"]["Enums"]["enquiry_category"]
+          county?: string | null
+          created_at?: string
+          description?: string | null
+          details?: Json
+          email?: string | null
+          estate?: string | null
+          follow_up_date?: string | null
+          full_name: string
+          id?: string
+          phone: string
+          preferred_contact?: string
+          preferred_time?: string | null
+          property_type?: string | null
+          reference: string
+          source?: string
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          town?: string | null
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          category?: Database["public"]["Enums"]["enquiry_category"]
+          county?: string | null
+          created_at?: string
+          description?: string | null
+          details?: Json
+          email?: string | null
+          estate?: string | null
+          follow_up_date?: string | null
+          full_name?: string
+          id?: string
+          phone?: string
+          preferred_contact?: string
+          preferred_time?: string | null
+          property_type?: string | null
+          reference?: string
+          source?: string
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          town?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      enquiry_notes: {
+        Row: {
+          author_id: string
+          body: string
+          created_at: string
+          enquiry_id: string
+          id: string
+        }
+        Insert: {
+          author_id: string
+          body: string
+          created_at?: string
+          enquiry_id: string
+          id?: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          created_at?: string
+          enquiry_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enquiry_notes_enquiry_id_fkey"
+            columns: ["enquiry_id"]
+            isOneToOne: false
+            referencedRelation: "enquiries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
+      enquiry_category:
+        | "general"
+        | "home"
+        | "property"
+        | "business"
+        | "school"
+        | "healthcare"
+        | "installation"
+        | "coverage"
+      enquiry_status:
+        | "new"
+        | "contacted"
+        | "assessment_required"
+        | "quotation_sent"
+        | "converted"
+        | "closed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +293,26 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+      enquiry_category: [
+        "general",
+        "home",
+        "property",
+        "business",
+        "school",
+        "healthcare",
+        "installation",
+        "coverage",
+      ],
+      enquiry_status: [
+        "new",
+        "contacted",
+        "assessment_required",
+        "quotation_sent",
+        "converted",
+        "closed",
+      ],
+    },
   },
 } as const
