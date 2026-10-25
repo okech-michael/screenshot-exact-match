@@ -62,7 +62,7 @@ export function SiteFooter() {
               </li>
             ))}
           </ul>
-          {contactConfigured(contact) && (
+          {contactConfigured() && (
             <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
               {contact.phone && (
                 <li className="flex items-center gap-2">
