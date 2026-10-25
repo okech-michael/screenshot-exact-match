@@ -9,12 +9,15 @@ import type { z } from "zod";
 import { submitEnquiry } from "@/lib/enquiries.functions";
 import {
   ENQUIRY_CATEGORIES,
+  enquiryRequestSchema,
+} from "@/lib/enquiry-schemas";
+import {
   ENQUIRY_CATEGORY_LABELS,
   KENYAN_COUNTIES,
-  enquiryRequestSchema,
   propertyTypeOptions,
-} from "@/lib/enquiry-schemas";
+} from "@/lib/content";
 import { cn } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -252,7 +255,7 @@ export function EnquiryForm({
         <div className="space-y-1.5">
           <Label htmlFor="preferredContact">How should we reach you?</Label>
           <Select
-            value={form.watch("preferredContact")}
+            value={form.watch("preferredContact") ?? ""}
             onValueChange={(v) =>
               form.setValue("preferredContact", v as "phone" | "whatsapp" | "email", {
                 shouldValidate: true,
@@ -277,7 +280,7 @@ export function EnquiryForm({
             County{showCountyRequired ? "" : " (optional)"}
           </Label>
           <Select
-            value={county || undefined}
+            value={county ?? ""}
             onValueChange={(v) => form.setValue("county", v, { shouldValidate: true })}
           >
             <SelectTrigger id="county">
@@ -314,7 +317,7 @@ export function EnquiryForm({
         <div className="space-y-1.5">
           <Label htmlFor="propertyType">Type of premises</Label>
           <Select
-            value={form.watch("propertyType") || undefined}
+            value={form.watch("propertyType") ?? ""}
             onValueChange={(v) =>
               form.setValue("propertyType", v, { shouldValidate: true })
             }
