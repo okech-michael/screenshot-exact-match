@@ -15,6 +15,9 @@ export const NAV_LINKS = [
   { label: "Contact", to: "/contact" },
 ] as const;
 
+/** Header / hero call-to-action. */
+export const siteHeaderCta = { label: "Get Connected", to: "/contact" } as const;
+
 export const SOLUTIONS = [
   {
     slug: "home-internet",
