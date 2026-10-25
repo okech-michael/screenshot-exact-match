@@ -2,8 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 
 import { HiveNetLogo } from "./logo";
-import { footerLinks } from "@/lib/content";
-import { siteConfig } from "@/lib/site-config";
+import { footerLinks, copyrightNotice } from "@/lib/content";
+import { contactConfigured, siteConfig } from "@/lib/site-config";
+
 
 function LinkColumn({
   title,
@@ -110,8 +111,7 @@ export function SiteFooter() {
   );
 }
 
-import { contactConfigured, copyrightNotice } from "@/lib/site-config";
-
 function copyrightText() {
   return copyrightNotice();
 }
+
