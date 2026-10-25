@@ -66,7 +66,7 @@ const institutionDetails = propertyDetails.extend({});
 export const enquiryRequestSchema = baseSchema.superRefine((val, ctx) => {
   const d = val.details as Record<string, string | undefined>;
   if (val.category === "property") {
-    if (!d.units) {
+    if (!d["units"]) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["details", "units"],
@@ -74,14 +74,14 @@ export const enquiryRequestSchema = baseSchema.superRefine((val, ctx) => {
       });
     }
   }
-  if (val.category === "business" && !d.users) {
+  if (val.category === "business" && !d["users"]) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["details", "users"],
       message: "Enter the approximate number of users",
     });
   }
-  if ((val.category === "school" || val.category === "healthcare") && !d.users) {
+  if ((val.category === "school" || val.category === "healthcare") && !d["users"]) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["details", "users"],
