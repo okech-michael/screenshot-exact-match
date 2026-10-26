@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 
 import { SiteLayout } from "@/components/site/layout";
 import { Reveal } from "@/components/site/reveal";
@@ -29,7 +29,7 @@ function Index() {
               HiveNet — internet and managed Wi-Fi
             </p>
             <h1 className="mt-3 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-              {siteConfig_tagline()}
+              Internet that keeps you connected.
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
               HiveNet delivers reliable internet connectivity and professionally
@@ -215,7 +215,7 @@ function Index() {
             {INDUSTRIES.map((ind, i) => (
               <Reveal key={ind.name} delay={i * 0.04}>
                 <Link
-                  to={ind.to as "/" | "/solutions/home-internet" | `/solutions/${""}`}
+                  to={ind.to as never}
                   className="flex h-full flex-col rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/50"
                 >
                   <span className="text-sm font-semibold text-foreground">
@@ -252,6 +252,3 @@ function Index() {
   );
 }
 
-function siteConfig_tagline() {
-  return "Internet that keeps you connected.";
-}
