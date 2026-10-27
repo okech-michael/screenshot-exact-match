@@ -321,8 +321,10 @@ function AdminPage() {
         <EnquiryDetailDialog
           enquiryId={selected.id}
           fallback={selected}
+          userId={userId}
           onClose={() => setSelectedId(null)}
         />
+
       )}
     </div>
   );
@@ -342,12 +344,15 @@ function StatCard({ label, value }: { label: string; value: number | undefined }
 function EnquiryDetailDialog({
   enquiryId,
   fallback,
+  userId,
   onClose,
 }: {
   enquiryId: string;
   fallback: EnquiryRow;
+  userId: string;
   onClose: () => void;
 }) {
+
   const queryClient = useQueryClient();
   const detail = useQuery({
     queryKey: ["admin", "enquiry", enquiryId],
