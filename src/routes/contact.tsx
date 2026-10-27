@@ -87,16 +87,17 @@ function Contact() {
                         </a>
                       </li>
                     )}
-                    {contact.whatsapp && (
+                    {(contact.whatsapp as string) && (
                       <li className="flex items-center gap-2">
                         <Phone className="h-4 w-4 text-primary-deep" />
                         <a
-                          href={`https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, "")}`}
+                          href={`https://wa.me/${(contact.whatsapp as string).replace(/[^0-9]/g, "")}`}
                           target="_blank"
                           rel="noreferrer"
                           className="hover:text-foreground"
                         >
                           WhatsApp us
+
                         </a>
                       </li>
                     )}
