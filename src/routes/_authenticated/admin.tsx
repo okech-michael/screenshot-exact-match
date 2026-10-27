@@ -126,15 +126,19 @@ function AdminPage() {
     setSearch(searchInput.trim());
   }
 
+  const context = Route.useRouteContext();
+  const userId = context.userId;
+
   function signOut() {
     (async () => {
       await queryClient.cancelQueries();
       queryClient.clear();
-      await supabaseSignOut();
+      await supabase.auth.signOut();
       navigate({ to: "/auth", replace: true });
       void router.invalidate();
     })();
   }
+
 
   const rows = enquiries.data ?? [];
   const selected = rows.find((r) => r.id === selectedId) ?? null;
