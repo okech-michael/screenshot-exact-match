@@ -372,7 +372,9 @@ export const footerLinks = {
     { name: "Plans and Pricing", to: "/plans" },
     { name: "Frequently Asked Questions", to: "/faq" },
     { name: "Contact HiveNet", to: "/contact" },
+    { name: "Staff sign-in", to: "/auth" },
   ],
+
   legal: [
     { name: "Privacy Policy", to: "/privacy" },
     { name: "Terms of Service", to: "/terms" },
