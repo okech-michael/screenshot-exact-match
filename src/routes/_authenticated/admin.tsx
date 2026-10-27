@@ -474,7 +474,7 @@ function EnquiryDetailDialog({
           size="sm"
           className="w-fit"
           disabled={detailsMutation.isPending}
-          onClick={() => detailsMutation.mutate({ assignedTo: "@me" })}
+          onClick={() => detailsMutation.mutate({ assignedTo: userId })}
         >
           <UserCheck className="mr-2 h-3.5 w-3.5" />
           Assign to me
@@ -591,10 +591,3 @@ function NotesSection({
   );
 }
 
-import { supabase } from "@/integrations/supabase/client";
-function supabaseSignOut() {
-  return supabase.auth.signOut();
-}
-
-// Keep the search memo reference used above valid if list grows.
-void useMemo;
