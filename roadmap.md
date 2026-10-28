@@ -1,16 +1,11 @@
 # HiveNet site — remaining build tasks
 
-- [ ] Home page (`src/routes/index.tsx`) — replace placeholder
-- [ ] Solutions overview (`src/routes/solutions.index.tsx` + layout)
-- [ ] Solution detail pages (`src/routes/solutions.$slug.tsx`)
-- [ ] Industries page (`/industries`)
-- [ ] How It Works page (`/how-it-works`)
-- [ ] About page (`/about`)
-- [ ] Plans & Pricing page (`/plans`)
-- [ ] FAQ page (`/faq`)
-- [ ] Contact page (`/contact`)
-- [ ] Privacy (`/privacy`) and Terms (`/terms`)
-- [ ] Staff sign-in (`/auth`) + managed `_authenticated` gate
-- [ ] Enquiry dashboard (`/admin`) — list, filters, stats, detail, notes, status
-- [ ] Routing tests for key routes
-- [ ] Verify: build clean, home + enquiry flow e2e in browser, admin gate check
+All public pages, auth and dashboard are built. Build passes.
+
+- [x] All public pages (home, solutions, industries, how-it-works, about, plans, faq, contact, privacy, terms)
+- [x] Staff sign-in (`/auth`) + managed `_authenticated` gate
+- [x] Enquiry dashboard (`/admin`) — list, filters, stats, detail, notes, status
+- [x] Routing tests
+- [x] Verified: build clean, public enquiry flow e2e (reference HN-… saved in DB), admin gate redirects to /auth signed out
+- [ ] Create the owner's staff account (needs user's email — signup requires email confirmation) and grant the admin role
+- [ ] Verify dashboard signed-in end-to-end (blocked on the staff account)
