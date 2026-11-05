@@ -154,6 +154,14 @@
   padding-inline: 1.25rem;
 }
 
+/* Hero background video: hidden for visitors who prefer reduced motion,
+   the poster image underneath stays visible as a static fallback. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video {
+    display: none;
+  }
+}
+
 @media (min-width: 768px) {
   .container-page {
     padding-inline: 2rem;
