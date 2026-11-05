@@ -12,7 +12,7 @@ export function Reveal({
   y = 24,
 }: {
   children: ReactNode;
-  className?: string;
+  className?: string | undefined;
   delay?: number;
   y?: number;
 }) {
