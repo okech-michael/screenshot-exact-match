@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Staff account onboarding
+- Invitation links return to `/auth/complete` so staff can set a password before accessing the protected dashboard.

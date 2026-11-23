@@ -22,8 +22,10 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthCompleteRouteImport } from './routes/auth.complete'
 import { Route as SolutionsIndexRouteImport } from './routes/solutions.index'
 import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
+import { Route as ApiPublicStaffBootstrapRouteImport } from './routes/api/public/staff-bootstrap'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -89,6 +91,11 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthCompleteRoute = AuthCompleteRouteImport.update({
+  id: '/complete',
+  path: '/complete',
+  getParentRoute: () => AuthRoute,
+} as any)
 const SolutionsIndexRoute = SolutionsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -99,11 +106,16 @@ const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => SolutionsRoute,
 } as any)
+const ApiPublicStaffBootstrapRoute = ApiPublicStaffBootstrapRouteImport.update({
+  id: '/api/public/staff-bootstrap',
+  path: '/api/public/staff-bootstrap',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -113,13 +125,15 @@ export interface FileRoutesByFullPath {
   '/solutions': typeof SolutionsRouteWithChildren
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/auth/complete': typeof AuthCompleteRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/solutions/': typeof SolutionsIndexRoute
+  '/api/public/staff-bootstrap': typeof ApiPublicStaffBootstrapRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -128,15 +142,17 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/auth/complete': typeof AuthCompleteRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/solutions': typeof SolutionsIndexRoute
+  '/api/public/staff-bootstrap': typeof ApiPublicStaffBootstrapRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/how-it-works': typeof HowItWorksRoute
@@ -146,8 +162,10 @@ export interface FileRoutesById {
   '/solutions': typeof SolutionsRouteWithChildren
   '/terms': typeof TermsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/auth/complete': typeof AuthCompleteRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/solutions/': typeof SolutionsIndexRoute
+  '/api/public/staff-bootstrap': typeof ApiPublicStaffBootstrapRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -164,8 +182,10 @@ export interface FileRouteTypes {
     | '/solutions'
     | '/terms'
     | '/admin'
+    | '/auth/complete'
     | '/solutions/$slug'
     | '/solutions/'
+    | '/api/public/staff-bootstrap'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -179,8 +199,10 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/admin'
+    | '/auth/complete'
     | '/solutions/$slug'
     | '/solutions'
+    | '/api/public/staff-bootstrap'
   id:
     | '__root__'
     | '/'
@@ -196,15 +218,17 @@ export interface FileRouteTypes {
     | '/solutions'
     | '/terms'
     | '/_authenticated/admin'
+    | '/auth/complete'
     | '/solutions/$slug'
     | '/solutions/'
+    | '/api/public/staff-bootstrap'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
-  AuthRoute: typeof AuthRoute
+  AuthRoute: typeof AuthRouteWithChildren
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   HowItWorksRoute: typeof HowItWorksRoute
@@ -213,6 +237,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   SolutionsRoute: typeof SolutionsRouteWithChildren
   TermsRoute: typeof TermsRoute
+  ApiPublicStaffBootstrapRoute: typeof ApiPublicStaffBootstrapRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -308,6 +333,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/auth/complete': {
+      id: '/auth/complete'
+      path: '/complete'
+      fullPath: '/auth/complete'
+      preLoaderRoute: typeof AuthCompleteRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/solutions/': {
       id: '/solutions/'
       path: '/'
@@ -322,6 +354,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolutionsSlugRouteImport
       parentRoute: typeof SolutionsRoute
     }
+    '/api/public/staff-bootstrap': {
+      id: '/api/public/staff-bootstrap'
+      path: '/api/public/staff-bootstrap'
+      fullPath: '/api/public/staff-bootstrap'
+      preLoaderRoute: typeof ApiPublicStaffBootstrapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -335,6 +374,16 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
+interface AuthRouteChildren {
+  AuthCompleteRoute: typeof AuthCompleteRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthCompleteRoute: AuthCompleteRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface SolutionsRouteChildren {
   SolutionsSlugRoute: typeof SolutionsSlugRoute
@@ -354,7 +403,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
-  AuthRoute: AuthRoute,
+  AuthRoute: AuthRouteWithChildren,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   HowItWorksRoute: HowItWorksRoute,
@@ -363,6 +412,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   SolutionsRoute: SolutionsRouteWithChildren,
   TermsRoute: TermsRoute,
+  ApiPublicStaffBootstrapRoute: ApiPublicStaffBootstrapRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
