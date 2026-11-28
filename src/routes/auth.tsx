@@ -27,6 +27,13 @@ export const Route = createFileRoute("/auth")({
         name: "description",
         content: "HiveNet staff sign-in for the enquiry dashboard.",
       },
+      { property: "og:title", content: "Staff Sign-In — HiveNet" },
+      {
+        property: "og:description",
+        content: "HiveNet staff sign-in for the enquiry dashboard.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

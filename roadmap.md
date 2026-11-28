@@ -7,5 +7,6 @@ All public pages, auth and dashboard are built. Build passes.
 - [x] Enquiry dashboard (`/admin`) — list, filters, stats, detail, notes, status
 - [x] Routing tests
 - [x] Verified: build clean, public enquiry flow e2e (reference HN-… saved in DB), admin gate redirects to /auth signed out
-- [ ] Create the owner's staff account (needs user's email — signup requires email confirmation) and grant the admin role
-- [ ] Verify dashboard signed-in end-to-end (blocked on the staff account)
+- [ ] Invite ceo@terraseptsolutions.com and grant the admin role (email supplied; blocked while Lovable Cloud is starting)
+- [ ] Verify dashboard signed-in end-to-end (blocked on the invitation and password setup)
+- [ ] Confirm GitHub delivery (changes can be committed here; GitHub sync status is only visible in Project settings → Git)

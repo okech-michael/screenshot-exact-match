@@ -66,6 +66,17 @@ export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
     meta: [
       { title: "Enquiry Dashboard — HiveNet" },
+      {
+        name: "description",
+        content: "Private HiveNet staff dashboard for reviewing and managing customer enquiries.",
+      },
+      { property: "og:title", content: "Enquiry Dashboard — HiveNet" },
+      {
+        property: "og:description",
+        content: "Private HiveNet staff dashboard for reviewing and managing customer enquiries.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

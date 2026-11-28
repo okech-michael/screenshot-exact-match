@@ -25,7 +25,6 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthCompleteRouteImport } from './routes/auth.complete'
 import { Route as SolutionsIndexRouteImport } from './routes/solutions.index'
 import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
-import { Route as ApiPublicStaffBootstrapRouteImport } from './routes/api/public/staff-bootstrap'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -106,11 +105,6 @@ const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => SolutionsRoute,
 } as any)
-const ApiPublicStaffBootstrapRoute = ApiPublicStaffBootstrapRouteImport.update({
-  id: '/api/public/staff-bootstrap',
-  path: '/api/public/staff-bootstrap',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -128,7 +122,6 @@ export interface FileRoutesByFullPath {
   '/auth/complete': typeof AuthCompleteRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/solutions/': typeof SolutionsIndexRoute
-  '/api/public/staff-bootstrap': typeof ApiPublicStaffBootstrapRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -145,7 +138,6 @@ export interface FileRoutesByTo {
   '/auth/complete': typeof AuthCompleteRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/solutions': typeof SolutionsIndexRoute
-  '/api/public/staff-bootstrap': typeof ApiPublicStaffBootstrapRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -165,7 +157,6 @@ export interface FileRoutesById {
   '/auth/complete': typeof AuthCompleteRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
   '/solutions/': typeof SolutionsIndexRoute
-  '/api/public/staff-bootstrap': typeof ApiPublicStaffBootstrapRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -185,7 +176,6 @@ export interface FileRouteTypes {
     | '/auth/complete'
     | '/solutions/$slug'
     | '/solutions/'
-    | '/api/public/staff-bootstrap'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -202,7 +192,6 @@ export interface FileRouteTypes {
     | '/auth/complete'
     | '/solutions/$slug'
     | '/solutions'
-    | '/api/public/staff-bootstrap'
   id:
     | '__root__'
     | '/'
@@ -221,7 +210,6 @@ export interface FileRouteTypes {
     | '/auth/complete'
     | '/solutions/$slug'
     | '/solutions/'
-    | '/api/public/staff-bootstrap'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -237,7 +225,6 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   SolutionsRoute: typeof SolutionsRouteWithChildren
   TermsRoute: typeof TermsRoute
-  ApiPublicStaffBootstrapRoute: typeof ApiPublicStaffBootstrapRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -354,13 +341,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolutionsSlugRouteImport
       parentRoute: typeof SolutionsRoute
     }
-    '/api/public/staff-bootstrap': {
-      id: '/api/public/staff-bootstrap'
-      path: '/api/public/staff-bootstrap'
-      fullPath: '/api/public/staff-bootstrap'
-      preLoaderRoute: typeof ApiPublicStaffBootstrapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -412,7 +392,6 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   SolutionsRoute: SolutionsRouteWithChildren,
   TermsRoute: TermsRoute,
-  ApiPublicStaffBootstrapRoute: ApiPublicStaffBootstrapRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
